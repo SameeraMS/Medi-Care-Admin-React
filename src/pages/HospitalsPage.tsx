@@ -303,7 +303,7 @@ export default function HospitalsPage() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-1 gap-6">
           {filteredHospitals.map((hospital) => (
               <div key={hospital.id} className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
                 <div className="flex flex-col md:flex-row">

@@ -1,12 +1,38 @@
-import React from 'react';
-import { LayoutDashboard, Users, Guitar as Hospital, Radical as Medical } from 'lucide-react';
+import React, {useEffect, useState} from 'react';
+import { Users, Guitar as Hospital, Radical as Medical } from 'lucide-react';
+import axios from '../utils/axios';
+
 
 export default function DashboardPage() {
-  const stats = [
-    { icon: Medical, label: 'Total Doctors', value: '45', change: '+5%' },
-    { icon: Hospital, label: 'Hospitals', value: '12', change: '+2%' },
-    { icon: Users, label: 'Active Users', value: '1,234', change: '+12%' },
-  ];
+
+    const [doctors, setDoctors] = useState([]);
+    const [hospitals, setHospitals] = useState([]);
+    const [users, setUsers] = useState([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const [doctorsRes, hospitalsRes, usersRes] = await Promise.all([
+                    axios.get("/doctors"),
+                    axios.get("/hospitals"),
+                    axios.get("/users"),
+                ]);
+                setDoctors(doctorsRes.data);
+                setHospitals(hospitalsRes.data);
+                setUsers(usersRes.data);
+            } catch (error) {
+                console.error("Error fetching data", error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+    const stats = [
+        { icon: Medical, label: "Total Doctors", value: doctors.length, change: "+5%" },
+        { icon: Hospital, label: "Hospitals", value: hospitals.length, change: "+2%" },
+        { icon: Users, label: "Active Users", value: users.length, change: "+12%" },
+    ];
 
   return (
     <div className="p-6">

@@ -16,29 +16,23 @@ export interface Doctor {
   rating: number;
 }
 
-export interface DoctorSchedule {
-  days: string[];
-  startTime: string;
-  endTime: string;
-}
-
-export interface HospitalDoctor extends Doctor {
-  hospitalFee: number;
-  schedule: DoctorSchedule;
-}
-
-export interface HospitalSpecialty {
-  name: string;
-  doctors: HospitalDoctor[];
-}
-
 export interface Hospital {
   id: number;
   name: string;
-  address: string;
+  location: string;
   image: string;
   rating: number;
-  specialties: HospitalSpecialty[];
+}
+
+export interface DocHospital {
+  id: number;
+  hospitalId: string;
+  category: string;
+  docId: string;
+  fee: number;
+  days: string[];
+  timeStart: string;
+  timeEnd: string;
 }
 
 export interface Category {

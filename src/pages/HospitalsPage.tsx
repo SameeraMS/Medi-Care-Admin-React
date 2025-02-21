@@ -127,7 +127,7 @@ export default function HospitalsPage() {
             days: doctor.schedule?.days || [],
             startTime: doctor.schedule?.startTime || '09:00',
             endTime: doctor.schedule?.endTime || '17:00',
-            fee: doctor.hospitalFee || 111
+            fee: doctor.hospitalFee || 0
           };
         });
       });
@@ -277,6 +277,7 @@ export default function HospitalsPage() {
         const response = await axios.post('/hospitals', formData);
         hospitalId = response.data._id;
 
+        console.log(formData.specialties)
         for (const specialty of formData.specialties) {
           for (const doctor of specialty.doctors) {
             const docHospitalData = {
@@ -320,7 +321,6 @@ export default function HospitalsPage() {
       hospital.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       hospital.location.toLowerCase().includes(searchTerm.toLowerCase())
   );
-
 
   return (
       <div className="p-6">
@@ -546,17 +546,6 @@ export default function HospitalsPage() {
 
                                     {isSelected && (
                                         <div className="space-y-4 pl-6">
-                                          <div>
-                                            <label className="block text-sm font-medium text-gray-700 mb-2">
-                                              Consultation Fee
-                                            </label>
-                                            <input
-                                                type="number"
-                                                value={schedule.fee}
-                                                onChange={(e) => handleScheduleChange(doctor._id, 'fee', Number(e.target.value))}
-                                                className="w-32 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                                            />
-                                          </div>
 
                                           <div>
                                             <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -575,6 +564,18 @@ export default function HospitalsPage() {
                                                   </label>
                                               ))}
                                             </div>
+                                          </div>
+
+                                          <div>
+                                            <label className="block text-sm font-medium text-gray-700 mb-2">
+                                              Consultation Fee
+                                            </label>
+                                            <input
+                                                type="number"
+                                                value={schedule.fee}
+                                                onChange={(e) => handleScheduleChange(doctor._id, 'fee', e.target.value)}
+                                                className="w-32 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                                            />
                                           </div>
 
                                           <div className="grid grid-cols-2 gap-4">

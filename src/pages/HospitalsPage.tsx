@@ -221,35 +221,53 @@ export default function HospitalsPage() {
   };
 
   const handleScheduleChange = (doctorId: string, field: string, value: any) => {
-    setDoctorSchedules(prev => ({
+    setDoctorSchedules((prev) => ({
       ...prev,
       [doctorId]: {
         ...prev[doctorId],
-        [field]: value
-      }
+        [field]: value,
+      },
     }));
 
-    setSelectedDoctors(prev => {
+    setSelectedDoctors((prev) => {
       const updated = { ...prev };
-      Object.keys(updated).forEach(specialty => {
-        updated[specialty] = updated[specialty].map(doctor =>
+      Object.keys(updated).forEach((specialty) => {
+        updated[specialty] = updated[specialty].map((doctor) =>
             doctor._id === doctorId
                 ? {
                   ...doctor,
                   hospitalFee: field === 'fee' ? value : doctor.hospitalFee,
-                  schedule: field === 'fee'
-                      ? doctor.schedule
-                      : {
-                        ...doctor.schedule,
-                        [field]: value
-                      }
+                  schedule: {
+                    ...doctor.schedule,
+                    ...(field !== 'fee' && { [field]: value }), // Updates only startTime or endTime
+                  },
                 }
                 : doctor
         );
       });
       return updated;
     });
+
+    setFormData((prev) => ({
+      ...prev,
+      specialties: prev.specialties.map((specialty) => ({
+        ...specialty,
+        doctors: specialty.doctors.map((doctor) =>
+            doctor._id === doctorId
+                ? {
+                  ...doctor,
+                  hospitalFee: field === 'fee' ? value : doctor.hospitalFee,
+                  schedule: {
+                    ...doctor.schedule,
+                    ...(field !== 'fee' && { [field]: value }), // Updates only startTime or endTime
+                  },
+                }
+                : doctor
+        ),
+      })).filter(specialty => specialty.doctors.length > 0), // Ensure doctors array isn't empty
+    }));
   };
+
 
   const handleDayToggle = (doctorId: string, day: string) => {
     const schedule = doctorSchedules[doctorId] || {
@@ -277,7 +295,6 @@ export default function HospitalsPage() {
         const response = await axios.post('/hospitals', formData);
         hospitalId = response.data._id;
 
-        console.log(formData.specialties)
         for (const specialty of formData.specialties) {
           for (const doctor of specialty.doctors) {
             const docHospitalData = {
@@ -299,8 +316,8 @@ export default function HospitalsPage() {
         }
       }
 
-      fetchHospitals();
       setIsModalOpen(false);
+      await fetchHospitals();
     } catch (error) {
       console.error('Error saving hospital:', error);
     }
@@ -310,6 +327,7 @@ export default function HospitalsPage() {
     if (window.confirm('Are you sure you want to delete this hospital?')) {
       try {
         await axios.delete(`/hospitals/${id}`);
+        await axios.delete(`/dochospitals/hospital/${id}`);
         fetchHospitals();
       } catch (error) {
         console.error('Error deleting hospital:', error);

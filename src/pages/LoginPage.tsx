@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import axios from '../utils/axios';
+import axios, {updateAxiosHeaders} from '../utils/axios';
 import AuthLayout from '../components/AuthLayout';
 
 export default function LoginPage() {
@@ -15,10 +15,13 @@ export default function LoginPage() {
     setError('');
 
     try {
-      const response = await axios.post('/admins/login', formData);
+      const response = await axios.post('/auth/admin/login', formData);
 
       // Save user data in local storage (excluding password)
       localStorage.setItem('user', JSON.stringify(response.data.admin));
+      localStorage.setItem('token', response.data.accessToken);
+
+      updateAxiosHeaders(response.data.accessToken);
 
       // Navigate to dashboard
       navigate('/dashboard');

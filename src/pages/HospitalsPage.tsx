@@ -25,7 +25,7 @@ export default function HospitalsPage() {
   const [formData, setFormData] = useState({
     name: '',
     location: '',
-    image: '',
+    image: 'https://images.unsplash.com/photo-1587351021759-3e566b6af7cc?q=80&w=500&auto=format&fit=crop',
     rating: 0,
     specialties: [] as { name: string; doctors: Doctor[] }[]
   });
@@ -139,7 +139,7 @@ export default function HospitalsPage() {
       setFormData({
         name: '',
         location: '',
-        image: '',
+        image: 'https://images.unsplash.com/photo-1587351021759-3e566b6af7cc?q=80&w=500&auto=format&fit=crop',
         rating: 0,
         specialties: []
       });
@@ -291,6 +291,8 @@ export default function HospitalsPage() {
       if (editingHospital) {
         const response = await axios.put(`/hospitals/${editingHospital._id}`, formData);
         hospitalId = response.data._id;
+
+
       } else {
         const response = await axios.post('/hospitals', formData);
         hospitalId = response.data._id;
@@ -317,7 +319,10 @@ export default function HospitalsPage() {
       }
 
       setIsModalOpen(false);
-      await fetchHospitals();
+
+      setTimeout(() => {
+        fetchHospitals();
+      }, 1000);
     } catch (error) {
       console.error('Error saving hospital:', error);
     }

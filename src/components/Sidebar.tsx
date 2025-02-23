@@ -35,8 +35,9 @@ export default function Sidebar({ onClose }: SidebarProps) {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('user');
+    localStorage.clear()
     navigate('/login');
+
     if (onClose) {
       onClose();
     }

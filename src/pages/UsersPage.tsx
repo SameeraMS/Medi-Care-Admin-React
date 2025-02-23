@@ -128,16 +128,16 @@ export default function UsersPage() {
                                   <div className="flex items-center justify-between">
                                       <div className="space-y-1">
                                           <p className="text-gray-700 font-medium">
-                                              <span className="text-gray-500">👨‍⚕️ Doctor:</span> {apt.docId.name}
+                                              <span className="text-gray-500">👨‍⚕️ Doctor:</span> {apt.docId?.name}
                                           </p>
                                           <p className="text-gray-700 font-medium">
-                                              <span className="text-gray-500">🩺 Category:</span> {apt.docId.specialty}
+                                              <span className="text-gray-500">🩺 Category:</span> {apt.docId?.specialty}
                                           </p>
                                           <p className="text-gray-700 font-medium">
-                                              <span className="text-gray-500">🏥 Hospital:</span> {apt.hospitalId.name}
+                                              <span className="text-gray-500">🏥 Hospital:</span> {apt.hospitalId?.name}
                                           </p>
                                           <p className="text-gray-700 font-medium">
-                                              <span className="text-gray-500">📆 Date:</span> {apt.date.split('T')[0]}
+                                              <span className="text-gray-500">📆 Date:</span> {apt.date?.split('T')[0]}
                                           </p>
                                           <p className="text-gray-700 font-medium">
                                               <span className="text-gray-500">⏰ Time:</span> {apt.time}

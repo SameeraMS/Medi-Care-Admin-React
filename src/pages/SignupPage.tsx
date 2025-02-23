@@ -25,7 +25,7 @@ export default function SignupPage() {
 
     setLoading(true);
     try {
-      const response = await axios.post('/admins', {
+      const response = await axios.post('/auth/admin/register', {
         name: formData.name,
         email: formData.email,
         password: formData.password,
@@ -33,7 +33,7 @@ export default function SignupPage() {
 
       if (response.status === 201) {
         alert('Signup successful! Redirecting to login...');
-        navigate('/login');
+        window.location.replace('/login');
       }
     } catch (err: any) {
       setError(err.response?.data?.message || 'Something went wrong');

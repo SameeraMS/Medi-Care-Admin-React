@@ -126,27 +126,30 @@ export default function UsersPage() {
                                 <div key={apt._id}
                                      className="p-4 bg-white shadow-md rounded-lg mt-3 border border-gray-200">
                                   <div className="flex items-center justify-between">
-                                    <div className="space-y-1">
-                                      <p className="text-gray-700 font-medium">
-                                        <span className="text-gray-500">👨‍⚕️ Doctor:</span> {apt.docId.name}
-                                      </p>
-                                      <p className="text-gray-700 font-medium">
-                                        <span className="text-gray-500">🏥 Hospital:</span> {apt.hospitalId.name}
-                                      </p>
-                                      <p className="text-gray-700 font-medium">
-                                        <span className="text-gray-500">📆 Date:</span> {apt.date.split('T')[0]}
-                                      </p>
-                                      <p className="text-gray-700 font-medium">
-                                        <span className="text-gray-500">⏰ Time:</span> {apt.time}
-                                      </p>
-                                      <p className="text-gray-700 font-medium">
-                                        <span className="text-gray-500">💰 Fee:</span> LKR {apt.fee}
-                                      </p>
-                                    </div>
+                                      <div className="space-y-1">
+                                          <p className="text-gray-700 font-medium">
+                                              <span className="text-gray-500">👨‍⚕️ Doctor:</span> {apt.docId.name}
+                                          </p>
+                                          <p className="text-gray-700 font-medium">
+                                              <span className="text-gray-500">🩺 Category:</span> {apt.docId.specialty}
+                                          </p>
+                                          <p className="text-gray-700 font-medium">
+                                              <span className="text-gray-500">🏥 Hospital:</span> {apt.hospitalId.name}
+                                          </p>
+                                          <p className="text-gray-700 font-medium">
+                                              <span className="text-gray-500">📆 Date:</span> {apt.date.split('T')[0]}
+                                          </p>
+                                          <p className="text-gray-700 font-medium">
+                                              <span className="text-gray-500">⏰ Time:</span> {apt.time}
+                                          </p>
+                                          <p className="text-gray-700 font-medium">
+                                              <span className="text-gray-500">💰 Fee:</span> LKR {apt.fee}
+                                          </p>
+                                      </div>
 
-                                    <button
-                                        onClick={() => handleDeleteAppointment(apt._id)}
-                                        className="text-red-600 hover:text-red-800 transition duration-200 transform hover:scale-105"
+                                      <button
+                                          onClick={() => handleDeleteAppointment(apt._id)}
+                                          className="text-red-600 hover:text-red-800 transition duration-200 transform hover:scale-105"
                                     >
                                       ❌ Delete
                                     </button>

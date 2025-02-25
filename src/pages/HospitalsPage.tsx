@@ -83,7 +83,7 @@ export default function HospitalsPage() {
         specialtiesMap.set(dh.category, []);
       }
 
-      const doctor = doctors.find((d) => d._id === dh.docId._id);
+      const doctor = doctors.find((d) => d._id === dh.docId?._id);
       if (doctor) {
         specialtiesMap.get(dh.category)?.push({
           ...doctor,
@@ -290,8 +290,26 @@ export default function HospitalsPage() {
       let hospitalId;
       if (editingHospital) {
         const response = await axios.put(`/hospitals/${editingHospital._id}`, formData);
-        hospitalId = response.data._id;
 
+        for (const specialty of formData.specialties) {
+          for (const doctor of specialty.doctors) {
+            const docHospitalData = {
+              hospitalId: editingHospital._id,
+              category: specialty.name,
+              docId: doctor._id,
+              fee: doctor.hospitalFee,
+              days: doctor.schedule.days,
+              timeStart: doctor.schedule.startTime,
+              timeEnd: doctor.schedule.endTime
+            };
+
+            try {
+              await axios.put(`/dochospitals/${editingHospital._id}`, docHospitalData);
+            } catch (err) {
+              console.error('Error saving doctor-hospital association:', err);
+            }
+          }
+        }
 
       } else {
         const response = await axios.post('/hospitals', formData);
@@ -322,7 +340,9 @@ export default function HospitalsPage() {
 
       setTimeout(() => {
         fetchHospitals();
-      }, 1000);
+      }, 5000);
+
+      window.location.reload();
     } catch (error) {
       console.error('Error saving hospital:', error);
     }
@@ -405,7 +425,7 @@ export default function HospitalsPage() {
                       <div className="mt-4">
                         <h4 className="text-sm font-medium text-gray-700 mb-2">Specialties & Doctors</h4>
                         <div className="space-y-2">
-                          {specialties.map((specialty) => (
+                          {specialties?.map((specialty) => (
                               <div key={specialty.name} className="border rounded-lg p-2">
                                 <div className="font-medium text-sm text-blue-600">{specialty.name}</div>
                                 <div className="mt-1 space-y-1">

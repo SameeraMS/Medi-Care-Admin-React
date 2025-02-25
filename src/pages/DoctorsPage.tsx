@@ -13,7 +13,7 @@ export default function DoctorsPage() {
   const [formData, setFormData] = useState({
     name: '',
     specialty: '',
-    image: 'https://www.iconpacks.net/icons/1/free-doctor-icon-313-thumb.png',
+    image: 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&q=80&w=300&h=300',
     experience: 0,
     rating: 0,
   });
@@ -46,7 +46,7 @@ export default function DoctorsPage() {
       setFormData({
         name: '',
         specialty: specialties[0],
-        image: '',
+        image: 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&q=80&w=300&h=300',
         experience: 0,
         rating: 0,
       });

@@ -30,7 +30,7 @@ export default function DashboardPage() {
 
     const stats = [
         { icon: Medical, label: "Total Doctors", value: doctors.length, change: "+5%" },
-        { icon: Hospital, label: "Hospitals", value: hospitals.length, change: "+2%" },
+        { icon: Hospital, label: "Total Hospitals", value: hospitals.length, change: "+2%" },
         { icon: Users, label: "Active Users", value: users.length, change: "+12%" },
     ];
 
